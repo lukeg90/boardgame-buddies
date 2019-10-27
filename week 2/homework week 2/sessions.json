@@ -1,0 +1,36 @@
+[
+  {
+    "game": {
+      "name": "Risk",
+      "minPlayers": 2,
+      "maxPlayers": 6
+    },
+    "language": "English",
+    "date": "20/10/2019",
+    "time": "20:00",
+    "address": "123 Anywhere St.",
+    "players": [
+      "Luke",
+      "Lisa",
+      "Bob",
+      "Jane",
+      "Phil",
+      "Kate"
+    ],
+    "minPlayersMet": true,
+    "host": "Luke"
+  },
+  {
+    "game": {
+      "name": "Catan",
+      "minPlayers": 3,
+      "maxPlayers": 4
+    },
+    "language": "German",
+    "date": "27/10/2019",
+    "time": "19:30",
+    "address": "456 Irgendwo Str.",
+    "players": [],
+    "minPlayersMet": false
+  }
+]
