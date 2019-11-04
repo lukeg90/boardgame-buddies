@@ -9,6 +9,7 @@
   "author": "Luke Grunau",
   "license": "MIT",
   "dependencies": {
+    "flatted": "^2.0.1",
     "time-stamp": "^2.2.0"
   }
 }

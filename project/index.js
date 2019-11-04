@@ -1,57 +1,73 @@
 /*My idea is a sort of meetup/social network for people who want to play board games with others
 in Berlin. Users will register and then either create a new session as a host (if they have a 
-game and a place to play) or join the session as a player.*/
+game and a place to play) or visit the session as a player.*/
 
-// const Player = require('./player.js')
-// const Game = require('./game.js')
-// const Session = require('./session.js')
-const Database = require('./database.js')
+const Player = require('./models/player.js')
+const Game = require('./models/game.js')
+const Session = require('./models/session.js')
+const PlayerService = require('./services/player-service')
+const GameService = require('./services/game-service')
+const SessionService = require('./services/session-service')
 
-// luke = new Player('Luke')
-// bob = new Player('Bob')
-// jane = new Player('Jane')
-// kate = new Player('Kate')
-// phil = new Player('Phil')
-// carl = new Player('Carl')
-// lisa = new Player('Lisa')
+async function main() {
+    const james = new Player('James')
+    const luke = new Player('Luke')
+    const kate = new Player('Kate')
+    const joe = new Player('Joe')
+    const lisa = new Player('Lisa')
+    const phil = new Player('Phil')
+    const barb = new Player ('Barb')
 
-// const players = [luke, bob, jane, kate, phil, carl, lisa]
+    const risk = new Game('Risk', 2, 6)
+    const catan = new Game('Catan', 3, 4)
+    const scrabble = new Game ('Scrabble', 2, 4)
 
-// risk = new Game('Risk', 2, 6)
-// catan = new Game('Catan', 3, 4)
+    const riskSession = new Session(risk, 'English', '20/11/2019', '19:00', '123 Anywhere St.')
 
-// const games = [risk, catan]
+    riskSession.setHost(luke)
+    lisa.visit(riskSession)
 
-// riskSession = new Session(risk, 'English', '20/10/2019', '20:00', '123 Anywhere St.')
-// catanSession = new Session(catan, 'German', '27/10/2019', '19:30', '456 Irgendwo Str.')
+    const catanSession = new Session(catan, 'German', '24/11/2019', '19:00', '432 Irgendwo Str.')
 
-// const sessions = [riskSession, catanSession]
+    james.visit(catanSession)
+    catanSession.setHost(james)
+    kate.visit(catanSession)
+    joe.visit(catanSession)
+    phil.visit(catanSession)
+    luke.visit(catanSession)
 
-// riskSession.setHost(luke)
+    const scrabbleSession = new Session(scrabble, 'Spanish', '25/11/2019', '20:00', '22 Friedrichstr.')
 
-// console.log(riskSession)
+    scrabbleSession.setHost(barb)
 
-// lisa.visit(riskSession)
+    await SessionService.add(riskSession)
+    await SessionService.add(catanSession)
+    await SessionService.add(scrabbleSession)
 
-// console.log(riskSession)
+    await GameService.add(riskSession.game)
+    await GameService.add(catanSession.game)
+    await GameService.add(scrabbleSession.game)
 
-// bob.visit(riskSession)
-// jane.visit(riskSession)
-// phil.visit(riskSession)
-// kate.visit(riskSession)
-// console.log(carl.visit(riskSession))
+    const sessions = await SessionService.findAll()
 
-// console.log(luke)
-// console.log(jane)
+    console.log(sessions[1])
 
-// Database.save('players.json', players)
-// Database.save('games.json', games)
-// Database.save('sessions.json', sessions)
+    await PlayerService.add(sessions[2].host)
 
-const loadedPlayers = Database.load('players.json')
-const loadedGames = Database.load('games.json')
-const loadedSessions = Database.load('sessions.json')
+    const players = await PlayerService.findAll()
 
-console.log(loadedPlayers)
-console.log(loadedGames)
-console.log(loadedSessions)
+    console.log(players[0])
+
+    await PlayerService.del(1)
+
+    const foundCatanSession = await SessionService.find(1)
+    console.log(foundCatanSession)
+
+    await PlayerService.add(foundCatanSession.players[0])
+
+    const newPlayers = await PlayerService.findAll()
+
+    console.log(newPlayers[0])    
+
+}
+main()
