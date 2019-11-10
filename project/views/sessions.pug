@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    h1 The number of total sessions is #{sessions.length}
+    each session in sessions
+        h3 Game: #{session.game.name} 
+        h3 Language: #{session.language}
+        h3 Hosted by: #{session.host}
+        h3 Date: #{session.date}
+        h3 Time: #{session.time}
+        h3 Location: #{session.address}
+        br

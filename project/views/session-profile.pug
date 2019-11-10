@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h3 Game: #{session.game.name} 
+    h3 Language: #{session.language}
+    h3 Hosted by: #{session.host}
+    h3 Date: #{session.date}
+    h3 Time: #{session.time}
+    h3 Location: #{session.address}
+    h3 Players: #{session.players}
+    if session.minPlayersMet == false 
+        h3 Session inactive - not enough players
+    else
+        h3 Session active - ready to play!

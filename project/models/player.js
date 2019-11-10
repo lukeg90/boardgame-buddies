@@ -14,7 +14,7 @@ module.exports = class Player {
         } else if (session.host === undefined) {
             console.log('This session does not yet have a host.')
         } else {
-            session.players.push(this)
+            session.players.push(this.name)
             this.visitedSessions.push(session)
             console.log(this.name + ' joined ' + session.game.name + ' session at '+ timestamp('YYYY/MM/DD/HH:mm'))
             if (session.players.length >= session.game.minPlayers) {
