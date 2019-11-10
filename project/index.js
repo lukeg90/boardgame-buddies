@@ -55,11 +55,11 @@ app.post('/session', async (req, res) => {
 })
 
 // host session
-app.post('/player/:id/host/:sessionId', async (req, res) => {
+app.post('/session/:id/host/:playerId', async (req, res) => {
     const allSessions = await SessionService.findAll()
     const allPlayers = await PlayerService.findAll()
-    const sessionWithoutHost = allSessions.find(p => p.id == req.params.sessionId)
-    const willingHost = allPlayers.find(p => p.id == req.params.id)
+    const sessionWithoutHost = allSessions.find(p => p.id == req.params.id)
+    const willingHost = allPlayers.find(p => p.id == req.params.playerId)
     sessionWithoutHost.setHost(willingHost)
     await SessionService.saveAll(allSessions)
     await PlayerService.saveAll(allPlayers)
