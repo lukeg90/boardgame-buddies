@@ -56,26 +56,28 @@ app.post('/session', async (req, res) => {
 
 // host session
 app.post('/session/:id/host/:playerId', async (req, res) => {
-    const allSessions = await SessionService.findAll()
-    const allPlayers = await PlayerService.findAll()
-    const sessionWithoutHost = allSessions.find(p => p.id == req.params.id)
-    const willingHost = allPlayers.find(p => p.id == req.params.playerId)
+    const sessionWithoutHost = await SessionService.find(req.params.id)
+    const willingHost = await PlayerService.find(req.params.playerId)
+
     sessionWithoutHost.setHost(willingHost)
-    await SessionService.saveAll(allSessions)
-    await PlayerService.saveAll(allPlayers)
+
+    await SessionService.update(sessionWithoutHost)
+    await PlayerService.update(willingHost)
+
     res.send('Host set')
 })
 
 // visit session
 app.post('/player/:id/visit/:sessionId', async (req, res) => {
-    const allSessions = await SessionService.findAll()
-    const allPlayers = await PlayerService.findAll()  
-    const visitingPlayer = allPlayers.find(p => p.id == req.params.id)
-    const desiredSession = allSessions.find(p => p.id == req.params.sessionId)
+    const visitingPlayer = await PlayerService.find(req.params.id)
+    const desiredSession = await SessionService.find(req.params.sessionId)
+
     visitingPlayer.visit(desiredSession)
-    await SessionService.saveAll(allSessions)
-    await PlayerService.saveAll(allPlayers)
-    res.send('Player has been added to the session')
+
+    await PlayerService.update(visitingPlayer)
+    await SessionService.update(desiredSession)
+    
+    res.send('Player has been added to the session.')
 })
 
 app.delete('/session/:id', async (req, res) => {

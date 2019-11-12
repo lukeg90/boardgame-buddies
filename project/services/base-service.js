@@ -65,5 +65,13 @@ module.exports = class Service {
       })
     })
   }
-}
+  async update(item) {
+    const allItems = await this.findAll()
+    const itemIndex = allItems.findIndex(i => i.id == item.id)
+    if (itemIndex < 0) return
 
+    allItems.splice(itemIndex, 1, item)
+
+    await this.saveAll(allItems)
+  }
+}
