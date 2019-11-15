@@ -5,89 +5,25 @@ game and a place to play) or visit the session as a player.*/
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const PlayerService = require('./services/player-service')
-const GameService = require('./services/game-service')
-const SessionService = require('./services/session-service')
+const playerRouter = require('./routes/player')
+const sessionRouter = require('./routes/session')
+const gameRouter = require('./routes/game')
+
+require('./mongo-connection')
 
 const app = express()
+
+app.locals.moment = require('moment')
 
 app.use(bodyParser.json())
 app.set('view engine', 'pug')
 
+app.use('/player', playerRouter)
+app.use('/session', sessionRouter)
+app.use('/game', gameRouter)
+
 app.get('/', (req, res) => {
     res.render('index')
-})
-
-app.get('/game/all', async (req, res) => {
-    const games = await GameService.findAll()
-    res.send(games)
-})
-
-app.get('/session/all', async (req, res) => {
-    const sessions = await SessionService.findAll()
-    res.render('sessions', { sessions: sessions })
-})
-
-app.get('/player/all', async (req, res) => {
-    const players = await PlayerService.findAll()
-    res.render('players', { players: players })
-})
-
-app.get('/player/:id', async (req, res) => {
-    const player = await PlayerService.find(req.params.id)
-    res.render('player-profile', {player: player})
-})
-
-app.get('/session/:id', async (req, res) => {
-    const id = req.params.id
-    const session = await SessionService.find(id)
-    res.render('session-profile', {session: session})
-})
-
-app.post('/player', async (req, res) => {
-    const player = await PlayerService.add(req.body)
-    res.send(player)
-
-})
-app.post('/session', async (req, res) => {
-    const session = await SessionService.add(req.body)
-    res.send(session)
-})
-
-// host session
-app.post('/session/:id/host/:playerId', async (req, res) => {
-    const sessionWithoutHost = await SessionService.find(req.params.id)
-    const willingHost = await PlayerService.find(req.params.playerId)
-
-    sessionWithoutHost.setHost(willingHost)
-
-    await SessionService.update(sessionWithoutHost)
-    await PlayerService.update(willingHost)
-
-    res.send('Host set')
-})
-
-// visit session
-app.post('/player/:id/visit/:sessionId', async (req, res) => {
-    const visitingPlayer = await PlayerService.find(req.params.id)
-    const desiredSession = await SessionService.find(req.params.sessionId)
-
-    visitingPlayer.visit(desiredSession)
-
-    await PlayerService.update(visitingPlayer)
-    await SessionService.update(desiredSession)
-    
-    res.send('Player has been added to the session.')
-})
-
-app.delete('/session/:id', async (req, res) => {
-    await SessionService.del(req.params.id)
-    res.send('successfully deleted')
-})
-
-app.delete('/player/:id', async (req, res) => {
-    await PlayerService.del(req.params.id)
-    res.send('successfully deleted')
 })
 
 app.listen(3000, () => {

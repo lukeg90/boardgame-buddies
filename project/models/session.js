@@ -1,29 +1,62 @@
-const timestamp = require('time-stamp')
+const mongoose = require('mongoose')
 
-module.exports = class Session {
-    constructor(game, language, date, time, address, players = [], minPlayersMet = false, host = undefined, id) {
-        this.game = game
-        this.language = language
-        this.date = date
-        this.time = time
-        this.address = address
-        this.players = players
-        this.minPlayersMet = minPlayersMet
-        this.host = host
-        this.id = id
+// To be used as a nested object inside SessionSchema.
+// Game Model no longer necessary.
+const GameSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    minPlayers: {
+        type: Number,
+        required: true
+    },
+    maxPlayers: {
+        type: Number,
+        required: true
     }
-    setHost(player) {
-        if (this.host == undefined) {
-            this.host = player.name
-            this.players.push(player.name)
-            player.hostedSessions.push(this)
-            console.log(this.game.name + ' session hosted by ' + player.name + ' on ' + timestamp('YYYY/MM/DD'))
-        } else {
-            console.log('Session already has a host')
+})
+
+const SessionSchema = new mongoose.Schema({
+    game: {
+        type: GameSchema,
+        required: true
+    },
+    language: {
+        type: String,
+        required: true
+    },
+    datetime: {
+        type: Date,
+        min: Date(),
+        required: true
+    },
+    location: {
+        type: String,
+        required: true
+    },
+    minPlayersMet: {
+        type: Boolean,
+        default: false
+    },
+    players: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Player',
+        autopopulate: {
+            maxDepth: 2
         }
+    }],
+    host: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Player',
+        autopopulate: {
+            maxDepth: 2
+        }
+    }
+})
 
-    }
-    static create({game, language, date, time, address, players, minPlayersMet, host, id}) {
-        return new Session(game, language, date, time, address, players, minPlayersMet, host, id)
-    }
-}
+SessionSchema.plugin(require('mongoose-autopopulate'))
+
+const SessionModel = mongoose.model('Session', SessionSchema)
+
+module.exports = SessionModel
