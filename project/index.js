@@ -1,7 +1,3 @@
-/*My idea is a sort of meetup/social network for people who want to play board games with others
-in Berlin. Users will register and then either create a new session as a host (if they have a 
-game and a place to play) or visit the session as a player.*/
-
 const express = require('express')
 const bodyParser = require('body-parser')
 
