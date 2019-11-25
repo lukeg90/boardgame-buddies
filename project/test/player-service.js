@@ -1,7 +1,6 @@
 import test from 'ava'
 import request from 'supertest'
 import app from '../app'
-import { throwStatement } from 'babel-types'
 const PlayerService = require('../services/player-service')
 
 test('Check outcome when session is full', async t => {
