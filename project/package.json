@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "ava --verbose --watch",
+    "test-coverage": "nyc ava --verbose"
   },
   "author": "Luke Grunau",
   "license": "MIT",
@@ -17,5 +18,11 @@
     "mongoose": "^5.7.10",
     "mongoose-autopopulate": "^0.9.1",
     "pug": "^2.0.4"
+  },
+  "devDependencies": {
+    "ava": "^2.4.0",
+    "nodemon": "^2.0.1",
+    "nyc": "^14.1.1",
+    "supertest": "^4.0.2"
   }
 }

@@ -28,7 +28,7 @@ const SessionSchema = new mongoose.Schema({
     },
     datetime: {
         type: Date,
-        min: Date(),
+        min: () => Date.now() + 1800000,
         required: true
     },
     location: {
@@ -51,7 +51,7 @@ const SessionSchema = new mongoose.Schema({
         ref: 'Player',
         autopopulate: {
             maxDepth: 2
-        }
+        },
     }
 })
 

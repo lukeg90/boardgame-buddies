@@ -9,9 +9,21 @@ router.get('/all', async (req, res) => {
     res.render('players', { players: players })
 })
 
+router.get('/all/json', async (req, res) => {
+    const players = await PlayerService.findAll()
+    res.send(players)
+})
+
 router.get('/:id', async (req, res) => {
     const player = await PlayerService.find(req.params.id)
+    if (!player) res.status(404)
     res.render('player-profile', {player: player})
+})
+
+router.get('/:id/json', async (req, res) => {
+    const player = await PlayerService.find(req.params.id)
+    if (!player) res.status(404)
+    res.send(player)
 })
 
 router.post('/', async (req, res) => {
@@ -24,20 +36,25 @@ router.delete('/:id', async (req, res) => {
     res.send('successfully deleted')
 })
 
+// router.delete('/all/delete', async (req, res) => {
+//     await PlayerService.deleteAll()
+//     res.send('All players deleted')
+// })
+
 //visit session
-router.post('/:id/visitedSessions', async (req, res) => {
+router.post('/:id/visited-sessions', async (req, res) => {
     const player = await PlayerService.find(req.params.id)
     const session = await SessionService.find(req.body.session)
     await PlayerService.visitSession(player, session)
-    res.send('Session joined')
+    res.send(session)
 })
-
+    
 //create and host session
-router.post('/:id/hostedSessions', async (req, res) => {
+router.post('/:id/hosted-sessions', async (req, res) => {
     const host = await PlayerService.find(req.params.id)
     const session = await SessionService.add(req.body)
     await PlayerService.hostSession(host, session)
-    res.send('Session has been created. Session ID: ' + session.id)
+    res.send(session)
 })
 
 module.exports = router

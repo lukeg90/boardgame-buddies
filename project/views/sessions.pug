@@ -5,8 +5,8 @@ block content
     each session in sessions
         p Game: #{session.game.name} 
         p Language: #{session.language}
-        p Hosted by: #{session.host.name}
+        //- p Hosted by: #{session.host.name}
         p Date and time: #{moment(session.datetime).format('MMMM Do YYYY, h:mm a')}
-        p Location: #{session.address}
+        p Location: #{session.location}
         p id: #{session.id}
         br

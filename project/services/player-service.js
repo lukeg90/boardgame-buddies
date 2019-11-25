@@ -7,6 +7,7 @@ class PlayerService extends BaseService {
    async visitSession(player, session) {
         if (session.game.maxPlayers <= session.players.length) {
             console.log('Sorry, this session is full.')
+            return undefined
         } else {
         player.visitedSessions.push(session)
         session.players.push(player)
@@ -17,11 +18,11 @@ class PlayerService extends BaseService {
         await session.save()
         }
     }
-    async hostSession(host, session) {
-        host.hostedSessions.push(session.id)
-        session.host = host.id
-        session.players.push(host)
-        await host.save()
+    async hostSession(player, session) {
+        player.hostedSessions.push(session)
+        session.players.push(player)
+        session.host = player
+        await player.save()   
         await session.save()
     }
 }
