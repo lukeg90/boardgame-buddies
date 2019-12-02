@@ -5,7 +5,7 @@ block content
     p Language: #{session.language}
     p Host: #{session.host.name}
     p Date and time: #{moment(session.datetime).format('MMMM Do YYYY, h:mm a')}
-    p Location: #{session.address}
+    p Location: #{session.location}
     p Players:
     ul
     each player in session.players

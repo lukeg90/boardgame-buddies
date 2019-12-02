@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 const playerRouter = require('./routes/player')
 const sessionRouter = require('./routes/session')
@@ -7,6 +8,7 @@ const sessionRouter = require('./routes/session')
 require('./mongo-connection')
 
 const app = express()
+app.use(cors())
 
 app.locals.moment = require('moment')
 

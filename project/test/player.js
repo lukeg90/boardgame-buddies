@@ -143,7 +143,7 @@ test('Player creates and hosts a session', async t => {
             maxPlayers: 4
         },
         language: 'English',
-        datetime: '2019-11-28T19:30',
+        datetime: '2020-11-28T19:30',
         location: '123 Anywhere St.'
     }
     //create player

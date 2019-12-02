@@ -11,12 +11,12 @@ class PlayerService extends BaseService {
         } else {
         player.visitedSessions.push(session)
         session.players.push(player)
+        }
         if (session.players.length >= session.game.minPlayers) {
             session.minPlayersMet = true
         }
         await player.save()
         await session.save()
-        }
     }
     async hostSession(player, session) {
         player.hostedSessions.push(session)

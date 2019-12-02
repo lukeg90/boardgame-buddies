@@ -40,9 +40,9 @@ router.delete('/:id', async (req, res) => {
     res.send('successfully deleted')
 })
 
-// router.delete('/all/delete', async (req, res) => {
-//     await SessionService.deleteAll()
-//     res.send('All sessions deleted')
-// })
+router.delete('/all/delete', async (req, res) => {
+    await SessionService.deleteAll()
+    res.send('All sessions deleted')
+})
 
 module.exports = router

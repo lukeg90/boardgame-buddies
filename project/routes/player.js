@@ -36,10 +36,10 @@ router.delete('/:id', async (req, res) => {
     res.send('successfully deleted')
 })
 
-// router.delete('/all/delete', async (req, res) => {
-//     await PlayerService.deleteAll()
-//     res.send('All players deleted')
-// })
+router.delete('/all/delete', async (req, res) => {
+    await PlayerService.deleteAll()
+    res.send('All players deleted')
+})
 
 //visit session
 router.post('/:id/visited-sessions', async (req, res) => {

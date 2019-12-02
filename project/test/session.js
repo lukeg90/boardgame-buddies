@@ -39,7 +39,7 @@ test('Fetch a session', async t => {
     t.is(fetchResJson.status, 200)
 
     const fetchedSession = fetchResJson.body
-    t.deepEqual(fetchedSession, createdSession)
+    t.is(fetchedSession._id, createdSession._id)
 
     await request(app).delete(`/player/${createdHost._id}`)
     await request(app).delete(`/session/${createdSession._id}`)
@@ -84,7 +84,7 @@ test('Delete a session', async t => {
     t.is(fetch.status,404)
 
     const fetchJson = await request(app).get(`/session/${createdSession._id}/json`)
-    t.is(fetch.status,404)
+    t.is(fetchJson.status,404)
 
     await request(app).delete(`/player/${createdHost._id}`)    
 })

@@ -18,7 +18,7 @@ test('Check outcome when session is full', async t => {
     t.is(actualResult, expectedResult)
 })
 
-//does not work. line 13 still shows as untested
+//does not work. line 15 still shows as untested
 test('Check outcome when minPlayers is met', async t => {
     const session = {
         game: {
@@ -27,6 +27,10 @@ test('Check outcome when minPlayers is met', async t => {
         },
         players: [{
             name: 'Somebody',
+            visitedSessions: []
+        },
+        {
+            name: 'Someone',
             visitedSessions: []
         }],
         minPlayersMet: false,
