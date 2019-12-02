@@ -27,7 +27,8 @@ export default {
   main
     h1 Board Game Buddies Berlin
     section
-      session-card(v-for="session in sortedSessions", :session="session")
+      h1(v-if="sessionsToday.length == 0") No Sessions Today &#128546
+      session-card(v-else v-for="session in sortedSessions", :session="session")
 </template>
 
 <style scoped>
