@@ -1,3 +1,12 @@
+
+<template lang="pug">
+article.card
+  h2.card-title
+    router-link(:to="playerUrl")  {{ player.name }}
+  p Hosted sessions: {{ player.hostedSessions.length }}
+  p Visited sessions: {{ player.visitedSessions.length }}
+</template>
+
 <script>
 
 export default {
@@ -11,13 +20,6 @@ export default {
 }
 </script>
 
-<template lang="pug">
-article.card
-  h2.card-title
-    router-link(:to="playerUrl")  {{ player.name }}
-  p Hosted sessions: {{ player.hostedSessions.length }}
-  p Visited sessions: {{ player.visitedSessions.length }}
-</template>
 
 <style scoped>
 .card {

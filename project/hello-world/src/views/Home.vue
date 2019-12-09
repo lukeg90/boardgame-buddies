@@ -1,3 +1,12 @@
+
+<template lang="pug">
+  main
+    h1 Board Game Buddies Berlin
+    section
+      h1(v-if="sessionsToday.length == 0") No Sessions Today &#128546
+      session-card(v-else v-for="session in sortedSessions", :session="session")
+</template>
+
 <script>
 // @ is an alias to /src
 import SessionCard from '@/components/session-card.vue'
@@ -22,14 +31,6 @@ export default {
   }
 }
 </script>
-
-<template lang="pug">
-  main
-    h1 Board Game Buddies Berlin
-    section
-      h1(v-if="sessionsToday.length == 0") No Sessions Today &#128546
-      session-card(v-else v-for="session in sortedSessions", :session="session")
-</template>
 
 <style scoped>
 section {

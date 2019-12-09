@@ -1,3 +1,8 @@
+<template lang="pug">
+    main 
+        player-card(:player="player")
+</template>
+
 <script>
 
 import { mapState, mapActions } from 'vuex'
@@ -19,8 +24,3 @@ export default {
     }
 }
 </script>
-
-<template lang="pug">
-    main 
-        player-card(:player="player")
-</template>

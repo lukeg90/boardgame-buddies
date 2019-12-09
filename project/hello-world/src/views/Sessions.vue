@@ -1,3 +1,10 @@
+<template lang="pug">
+  main
+    h1 Game Sessions
+    section
+      session-card(v-for="session in sortedSessions", :session="session")
+</template>
+
 <script>
 // @ is an alias to /src
 import SessionCard from '@/components/session-card.vue'
@@ -22,13 +29,6 @@ export default {
   }
 }
 </script>
-
-<template lang="pug">
-  main
-    h1 Game Sessions
-    section
-      session-card(v-for="session in sortedSessions", :session="session")
-</template>
 
 <style scoped>
 section {

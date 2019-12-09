@@ -1,3 +1,12 @@
+<template lang="pug">
+article.card
+  game-image(:session="session")
+  h2.card-title 
+    router-link(:to="sessionUrl") {{ session.game.name }} 
+  p {{ moment(session.datetime).format('MMMM Do YYYY, h:mm a') }}
+  p(v-if="session.players.length == session.game.maxPlayers" style="color: red") Session full
+</template>
+
 <script>
 
 import GameImage from './game-image.vue'
@@ -15,15 +24,6 @@ export default {
   }
 }
 </script>
-
-<template lang="pug">
-article.card
-  game-image(:session="session")
-  h2.card-title 
-    router-link(:to="sessionUrl") {{ session.game.name }} 
-  p {{ moment(session.datetime).format('MMMM Do YYYY, h:mm a') }}
-  p(v-if="session.players.length == session.game.maxPlayers" style="color: red") Session full
-</template>
 
 <style scoped>
 .card {
