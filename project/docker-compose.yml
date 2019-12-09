@@ -8,9 +8,9 @@ services:
     ports:
       - 3000:3000
   frontend:
-    build: hello-world
+    build: frontend
     environment:
-      VUE_APP_API_URL: "http://192.168.99.100:3000"
+      VUE_APP_API_URL: "http://localhost:3000"
       PORT: "8080"
     ports:
       - 8080:8080
