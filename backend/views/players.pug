@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    h1 The number of registered players is #{players.length}
+    each player in players 
+        p #{player.name}
+        p ID: #{player.id}
+        br
